@@ -22,10 +22,10 @@
       </div><br>
       <div>
         <p class="title emailTitleStyling">Send List to email:</p>
-        <p>Email Address:  <input v-model="email" type="text"></p><br>
+        <p><b>Email Address:</b>  <input v-model="email" type="text" class="itemName"></p><br>
         <p><b>Add email content:</b></p>
         <textarea v-model="textarea" class="emailContent"></textarea><br><br>
-        <button v-on:click="sendEmail(groceryItem)">send</button>
+        <button v-on:click="sendEmail()">send</button>
       </div><br><br><br><br>
     </div>
   </div>
@@ -47,16 +47,12 @@ export default {
     }
   },
   methods: {
-    sendEmail(groceryItem) {
+    sendEmail() {
       axios.post('http://127.0.0.1:3000/viewgrocerylist', {
         email:this.email,
         text:this.textarea,
         groceryListName:this.groceryListName.groceryName,
-        groceryListFinal:this.groceryListFinal,
-        productName:this.groceryItem.productName,
-        qty: this.groceryItem.qty,
-        price:this.groceryItem.price
-
+        groceryListFinal:this.groceryListFinal
       })
       .then(function (response) {
           console.log(response);
@@ -107,6 +103,9 @@ export default {
 </script>
 
 <style>
+  .itemName {
+    width:200px;
+  }
   .totalTitle {
     font-size:20px;
   }

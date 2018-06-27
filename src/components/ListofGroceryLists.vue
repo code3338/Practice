@@ -73,7 +73,7 @@ export default {
     color: white;
   }
   .item {
-    border:solid 2px blue;
+    border:solid 2px #00ace6;
     width:50%;
     margin:auto;
     margin-bottom:15px;

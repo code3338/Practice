@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <h2 class="title">{{title}}</h2>
-    <br><br>
     <div>
       Name:<br />
       <input v-model="groceryList.name" class="itemName"><br /><br />
@@ -14,8 +13,6 @@
       </button>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -24,7 +21,7 @@ export default {
   name:'app',
   data () {
     return {
-      title:"Add Grocery List",
+      title:"Create Grocery List",
       listofGroceryLists:[],
       groceryList: {
         name: "",

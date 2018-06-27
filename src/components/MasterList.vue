@@ -13,7 +13,7 @@
            <p><b>Price:</b> $ {{item.price}}</p>
          </div>
        </div>
-      <div class="flex">
+      <div class="flex borderBottom">
         <button class="button is-primary is-outlined buttonBold flex2"><router-link :to="{path:'/updateitem/' + item.productId}" class="link buttonBold"><span>Update item</span>
           <span class="icon is-small">
             <i class="far fa-edit"></i>
@@ -33,7 +33,7 @@
         <label class="flex1 groceryLabel">Select List:</label>
         <div class="select is-info marginAuto">
           <select v-bind:id="item.productId" class="flex1">
-            <option v-for="grocery in groceryList" v-bind:value="grocery.groceryId">{{grocery.groceryName}}</option>
+            <option v-for="grocery in groceryList" v-bind:value="grocery.groceryId" v-bind:id="grocery.groceryName">{{grocery.groceryName}}</option>
           </select>
         </div>
         <button v-on:click="addItem(item)" class="flex1 button is-success is-outlined buttonBold"><span>Add item</span>
@@ -102,19 +102,25 @@ export default {
     addItem(item) {
       let value = document.getElementById(item.productId).value;
       let value2 = item.QTY;
-      axios.post('http://127.0.0.1:3000/additemtogrocerylist', {
-        productId:item.productId,
-        groceryId:value,
-        qty:value2
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      if(value2 === 0) {
+        alert("QTY is 0. Please enter a QTY greater than 0.");
+      }
+      else {
+        alert("Item has been added to Grocery List.");
+        axios.post('http://127.0.0.1:3000/additemtogrocerylist', {
+          productId:item.productId,
+          groceryId:value,
+          qty:value2
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      }
     }
-  },
+ },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
     axios.get('http://127.0.0.1:3000')
@@ -161,7 +167,6 @@ export default {
     font-weight:bold;
     font-size:18px;
     margin-top:10px;
-
   }
  .groceryLabel {
    font-size:17px;
@@ -174,13 +179,15 @@ export default {
   .align {
     margin:auto;
     text-align:center;
-
+  }
+  .borderBottom {
+    border-bottom:solid 2px #00ace6;
+    border-bottom-width:5px;
   }
   .flex {
     display:flex;
     margin:auto;
     text-align:center;
-    border-bottom:solid 2px #00ace6;
   }
   .flex1 {
     flex:1;
@@ -204,7 +211,7 @@ export default {
     color: white;
   }
   .item {
-    border:solid 2px blue;
+    border:solid 2px #00ace6;
     width:50%;
     margin:auto;
     margin-bottom:15px;

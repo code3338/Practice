@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <h2 class="title">{{title}}</h2>
-    <br><br>
     <div>
       Item name:<br />
       <input v-model="item.name" class="itemName"><br /><br />
@@ -14,9 +13,6 @@
       </button>
     </div>
   </div>
-
-
-
 </template>
 
 <script>
@@ -25,7 +21,7 @@ export default {
   name:'app',
   data () {
     return {
-      title:"Add a Movie",
+      title:"Add Item",
       masterList:[],
       item: {
         name: "" ,
@@ -64,7 +60,7 @@ export default {
     width:200px;
   }
  .price {
-  width:100px;
+    width:90px;
   }
   .star {
    width:280px;

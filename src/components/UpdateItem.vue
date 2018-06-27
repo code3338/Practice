@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <h2>{{title}}</h2>
+    <h2 class="title">{{title}}</h2>
     <div>
-      Product Name:<br />
-      <input v-model="item.productName"><br /><br />
+      Item Name:<br />
+      <input v-model="item.productName" class="itemName"><br /><br />
       Price:<br />
-      <input v-model="item.price"><br /><br />
-      <button v-on:click="updateItem(item)">update</button>
+      $<input v-model="item.price" class="price"><br /><br />
+      <button v-on:click="updateItem(item)" class="button is-primary is-outlined buttonBold"><span>Update</span>
+        <span class="icon is-small">
+          <i class="far fa-edit"></i>
+        </span>
+      </button>
     </div>
   </div>
 </template>
@@ -57,11 +61,11 @@ export default {
 </script>
 
 <style>
-  .item {
-    border:solid 2px blue;
-    width:50%;
-    margin:auto;
-    margin-bottom:15px;
+  .itemName {
+    width:200px;
+  }
+  .price {
+    width:90px;
   }
   .star {
    width:280px;

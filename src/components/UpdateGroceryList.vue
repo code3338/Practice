@@ -26,10 +26,10 @@
           <th>QTY</th>
           <th>Delete Item</th>
         </tr>
-        <tr v-for="groceryItem in groceryItemList">
+        <tr v-for="(groceryItem,index) in groceryItemList">
           <td>{{groceryItem.productName}}</td>
           <td>${{groceryItem.price}}</td>
-          <td><input v-model="groceryItem.QTY" v-bind:id="groceryItem.QTY" class="qty" v-on:change="qtyColor(groceryItem)"></td>
+          <td><input v-model="groceryItem.QTY" id="qtyInput" class="qty" v-bind:id="index" v-on:change="qtyColor(index)"></td>
           <td><button v-on:click="deleteItem(groceryItem)" class="button is-danger is-outlined buttonBold flex2"><span>Delete</span>
             <span class="icon is-small">
               <i class="fas fa-times"></i>
@@ -103,10 +103,11 @@ export default {
           location.reload();
       }
     },
-    qtyColor(groceryItem) {
-      document.getElementById(groceryItem.QTY).style.backgroundColor = "#0099cc";
+    qtyColor(index) {
+      let index1 =document.getElementById(index);
+      index1.style.backgroundColor = "#0099cc";
     }
-   },
+  },
   created() {
     axios.get('http://127.0.0.1:3000/updategrocerylist/' + this.$route.params.id)
       .then((response) => {

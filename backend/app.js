@@ -215,6 +215,18 @@ app.patch("/updateitemlist", function(req,res) {
          })
 
          app.post("/viewgrocerylist", function(req,res) {
+           console.log(req);
+           let groceryListFinal1 = [];
+           function groceryListFinal() {
+             for(let i = 0; i < req.body.groceryListFinal.length; i++) {
+               groceryListFinal1 += req.body.groceryListFinal[i]
+               // let productName = req.body.groceryListFinal[i].productName;
+               // let qty = req.body.groceryListFinal[i].QTY;
+               // let price = req.body.groceryListFinal[i].price;
+             }
+             return groceryListFinal1;
+           }
+           console.log(groceryListFinal());
            let transporter = nodemailer.createTransport({
              service: "SendGrid",
              auth: {
