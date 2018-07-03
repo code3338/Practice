@@ -3,7 +3,7 @@
     <h2 class="title">{{title}}</h2>
     <div>
       Name:<br />
-      <input v-model="groceryList.groceryName"><br /><br />
+      <input v-model="groceryList.groceryName" class="groceryName2"><br /><br />
       Description:<br />
       <textarea v-model="groceryList.groceryDescription" class="textArea"></textarea><br /><br />
       <button v-on:click="updateGroceryList(groceryList)" class="button is-primary is-outlined buttonBold flex2"><span>Update grocery list</span>
@@ -12,7 +12,7 @@
         </span>
       </button>
     </div><br>
-    <div>
+    <div class="tableDiv">
       <h3 class="title">Grocery Items</h3>
       <button v-on:click="updateItemList()" class="button is-primary is-outlined buttonBold flex2"><span>Update item QTY</span>
         <span class="icon is-small">
@@ -30,7 +30,7 @@
           <td>{{groceryItem.productName}}</td>
           <td>${{groceryItem.price}}</td>
           <td><input v-model="groceryItem.QTY" id="qtyInput" class="qty" v-bind:id="index" v-on:change="qtyColor(index)"></td>
-          <td><button v-on:click="deleteItem(groceryItem)" class="button is-danger is-outlined buttonBold flex2"><span>Delete</span>
+          <td><button v-on:click="deleteItem(groceryItem)" class="button is-danger is-outlined buttonBold flex2 deleteButton3"><span class="deleteText">Delete</span>
             <span class="icon is-small">
               <i class="fas fa-times"></i>
             </span>
@@ -50,6 +50,9 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
+import "firebaseui/dist/firebaseui.css";
+import db from"../utils/firebaseConfig.js";
 let mySearch = document.getElementById("mySearch");
 export default {
   name:'app',
@@ -125,6 +128,13 @@ export default {
         .catch((error) => {
           console.log(error);
         })
+      firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.name = firebase.auth().currentUser.displayName,
+            this.userId = firebase.auth().currentUser.uid,
+            this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+          }
+      })
    }
  }
 
@@ -132,6 +142,9 @@ export default {
 </script>
 
 <style>
+  .groceryCartImg {
+   display:none;
+  }
   table,th,td {
     border: 2px solid #0099cc;
     border-collapse: collapse;
@@ -169,5 +182,42 @@ export default {
    width:280px;
    margin:auto;
    text-align:center;
+  }
+  @media(max-width:480px) {
+    .deleteButton3 {
+      width:100px;
+    }
+    table,th,td {
+      padding:4px;
+    }
+    table {
+      width:85%;
+    }
+  }
+  @media(max-width:320px) {
+    .deleteButton3 {
+      width:50px;
+    }
+    .deleteText {
+      display:none;
+    }
+    table,th,td {
+      padding:4px;
+    }
+    .textArea {
+      width:200px;
+      height:80px;
+     }
+     .groceryName2 {
+       width:200px;
+     }
+     .tableDiv {
+       width:85%;
+       margin:auto;
+     }
+     .qty {
+       width:40px;
+       margin:auto;
+      }
   }
 </style>

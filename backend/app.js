@@ -1,4 +1,5 @@
 "use strict"
+
 const express= require("express");
 const cors = require("cors");
 let pswd = require("./pswd.js");
@@ -202,6 +203,7 @@ app.patch("/updateitemlist", function(req,res) {
             res.send("entry created");
           })
          })
+
          app.get("/listofgrocerylists2/:id", function(req,res) {
           let groceryListNameArray;
           connection.query("SELECT groceryId, groceryName, groceryDescription FROM groceryListCreate WHERE groceryId =" + req.params.id, function (error, results, fields) {
@@ -216,17 +218,6 @@ app.patch("/updateitemlist", function(req,res) {
 
          app.post("/viewgrocerylist", function(req,res) {
            console.log(req);
-           let groceryListFinal1 = [];
-           function groceryListFinal() {
-             for(let i = 0; i < req.body.groceryListFinal.length; i++) {
-               groceryListFinal1 += req.body.groceryListFinal[i]
-               // let productName = req.body.groceryListFinal[i].productName;
-               // let qty = req.body.groceryListFinal[i].QTY;
-               // let price = req.body.groceryListFinal[i].price;
-             }
-             return groceryListFinal1;
-           }
-           console.log(groceryListFinal());
            let transporter = nodemailer.createTransport({
              service: "SendGrid",
              auth: {
@@ -239,8 +230,28 @@ app.patch("/updateitemlist", function(req,res) {
              to: req.body.email,
              subject: `"${req.body.groceryListName}"`,
              text: req.body.text,
-             html: `<p>"${req.body.text}${req.body.productName}"${req.body.price}</p>`
+             html: ``
            }
+           mailOptions.html = `<p>"${req.body.text}"</p><br>
+           <table style="border:solid 2px #0099cc;text-align:center;border-collapse:collapse;padding:7px;margin:0px">
+           <tr>
+             <th style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;background-color:#99ccff;font-weight:bold;font-size:18px;margin-bottom:0px">Product Name</th>
+             <th style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;background-color:#99ccff;font-weight:bold;font-size:18px;margin-bottom:0px"">QTY</th>
+             <th style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;background-color:#99ccff;font-weight:bold;font-size:18px;margin-bottom:0px"">Price</th>
+           </tr>
+           </table><br>
+          `
+           function groceryListFinal() {
+             for(let i = 0; i < req.body.groceryListFinal.length; i++) {
+               mailOptions.html += `<tr>
+                <td style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;margin:auto;text-align:center;font-size:16px;margin-top:0px;width:120px">${req.body.groceryListFinal[i].productName}</td>
+                <td style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;margin:auto;text-align:center;font-size:16px;margin-top:0px;width:35px">${req.body.groceryListFinal[i].QTY}</td>
+                <td style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;margin:auto;text-align:center;font-size:16px;margin-top:0px">$${req.body.groceryListFinal[i].price}</td>
+               </tr>`
+             }
+           }
+           groceryListFinal();
+
            transporter.sendMail(mailOptions, (err, info) => {
              if (err) {
                console.log(err);

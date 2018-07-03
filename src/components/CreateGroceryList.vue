@@ -17,6 +17,9 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
+import "firebaseui/dist/firebaseui.css";
+import db from"../utils/firebaseConfig.js";
 export default {
   name:'app',
   data () {
@@ -48,12 +51,27 @@ export default {
       this.groceryList.name = "",
       this.groceryList.description=""
     }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.name = firebase.auth().currentUser.displayName,
+        this.userId = firebase.auth().currentUser.uid,
+        this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+      }
+    })
   }
 }
 
 </script>
 
 <style>
+  .itemName {
+    width:200px;
+  }
+  .groceryCartImg {
+    display:none;
+   }
   .groceryListDescription {
     width:200px;
     height:100px;

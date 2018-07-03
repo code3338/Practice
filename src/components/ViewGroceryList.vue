@@ -33,6 +33,9 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
+import "firebaseui/dist/firebaseui.css";
+import db from"../utils/firebaseConfig.js";
 export default {
   name:'app',
   props:["groceryItem"],
@@ -60,6 +63,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+        window.alert("Email Sent");
      }
   },
   computed: {
@@ -97,12 +101,22 @@ export default {
             .catch((error) => {
               console.log(error);
             })
+       firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.name = firebase.auth().currentUser.displayName,
+            this.userId = firebase.auth().currentUser.uid,
+            this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+          }
+       })
     }
 }
 
 </script>
 
 <style>
+  .groceryCartImg {
+    display:none;
+  }
   .itemName {
     width:200px;
   }

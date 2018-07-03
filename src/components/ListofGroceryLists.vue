@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <h2 class="title">{{title}}</h2>
-    <div v-for="groceryList in listofGroceryLists" class="item">
+    <div v-for="groceryList in listofGroceryLists" class="item2 groceryCardBackgroundColor">
       <p class="fontSize"><b>Name:</b> {{groceryList.groceryName}}</p>
       <p class="fontSize"><b>Description:</b> {{groceryList.groceryDescription}}</p><br>
-      <button class="button is-primary is-outlined buttonBold flex2"><router-link :to="{path:'/updategrocerylist/' + groceryList.groceryId}" class="link buttonBold"><span>Update</span>
+      <button class="button is-primary is-outlined buttonBold flex2 updateButton2"><router-link :to="{path:'/updategrocerylist/' + groceryList.groceryId}" class="link buttonBold"><span>Update</span>
         <span class="icon is-small">
           <i class="far fa-edit"></i>
         </span>
       </router-link></button>
-      <button v-on:click="deleteGroceryList(groceryList)" class="button is-danger is-outlined buttonBold flex2"><span>Delete</span>
+      <button v-on:click="deleteGroceryList(groceryList)" class="button is-danger is-outlined buttonBold flex2 deleteButton2"><span>Delete</span>
         <span class="icon is-small">
           <i class="fas fa-times"></i>
         </span>
       </button>
-      <button class="button is-info is-outlined buttonBold flex2"><router-link :to="{path:'/viewgrocerylist/' + groceryList.groceryId}" class="link buttonBold viewListFontColor"><span>View grocery list</span>
+      <button class="button is-info is-outlined buttonBold flex2 viewListButton"><router-link :to="{path:'/viewgrocerylist/' + groceryList.groceryId}" class="link buttonBold viewListFontColor"><span>View grocery list</span>
         <span class="icon is-small">
           <i class="fas fa-eye"></i>
         </span>
@@ -25,6 +25,9 @@
 
 <script>
 import axios from "axios";
+import firebase from "firebase";
+import "firebaseui/dist/firebaseui.css";
+import db from"../utils/firebaseConfig.js";
 let mySearch = document.getElementById("mySearch");
 export default {
   name:'app',
@@ -53,12 +56,25 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-    }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.name = firebase.auth().currentUser.displayName,
+        this.userId = firebase.auth().currentUser.uid,
+        this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+      }
+    })
+  }
 }
 
 </script>
 
 <style>
+  .groceryCardBackgroundColor {
+    background-color: #e6f2ff;
+  }
+  .groceryCartImg {
+    display:none;
+  }
   .viewListFontColor {
     color:#0099cc;
   }
@@ -72,9 +88,9 @@ export default {
   .buttonBold:hover {
     color: white;
   }
-  .item {
+  .item2 {
     border:solid 2px #00ace6;
-    width:50%;
+    width:475px;
     margin:auto;
     margin-bottom:15px;
   }
@@ -82,5 +98,35 @@ export default {
    width:280px;
    margin:auto;
    text-align:center;
+  }
+  @media(max-width:480px) {
+    .item2 {
+      width:90%;
+    }
+    .viewListButton {
+      margin-top:20px;
+      margin-bottom:10px;
+    }
+    .updateButton2 {
+      margin-right:20px;
+    }
+    .deleteButton2 {
+      margin-left:20px;
+    }
+  }
+  @media(max-width:320px) {
+    .item2 {
+      width:90%;
+    }
+    .viewListButton {
+      margin-top:20px;
+      margin-bottom:10px;
+    }
+    .updateButton2 {
+      margin-right:10px;
+    }
+    .deleteButton2 {
+      margin-left:10px;
+    }
   }
 </style>
