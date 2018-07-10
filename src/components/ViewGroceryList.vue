@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-component></nav-component><br><br>
     <div>
       <h2 class="title">{{groceryListName.groceryName}}</h2>
       <p class="groceryDescription">({{groceryListName.groceryDescription}})</p>
@@ -22,7 +23,8 @@
       </div><br>
       <div>
         <p class="title emailTitleStyling">Send List to email:</p>
-        <p><b>Email Address:</b>  <input v-model="email" type="text" class="itemName"></p><br>
+        <p><b>Email Address:</b></p>
+        <input v-model="email" type="text" class="itemName"><br><br>
         <p><b>Add email content:</b></p>
         <textarea v-model="textarea" class="emailContent"></textarea><br><br>
         <button v-on:click="sendEmail()">send</button>
@@ -36,8 +38,10 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
+import navComponent from "./Nav.vue";
 export default {
-  name:'app',
+  name:"loggedin",
+  components:{navComponent},
   props:["groceryItem"],
   data () {
     return {
@@ -46,7 +50,10 @@ export default {
       groceryListName:[],
       send:[],
       email: "",
-      textarea:""
+      textarea:"",
+      userName:"testing name",
+      userId:"testing id",
+      email:"testing email"
     }
   },
   methods: {
@@ -55,7 +62,8 @@ export default {
         email:this.email,
         text:this.textarea,
         groceryListName:this.groceryListName.groceryName,
-        groceryListFinal:this.groceryListFinal
+        groceryListFinal:this.groceryListFinal,
+        totalPrice:this.totalPrice
       })
       .then(function (response) {
           console.log(response);
@@ -64,6 +72,8 @@ export default {
           console.log(error);
         });
         window.alert("Email Sent");
+        this.email=""
+        this.textarea=""
      }
   },
   computed: {
@@ -103,7 +113,7 @@ export default {
             })
        firebase.auth().onAuthStateChanged((user) => {
           if (user) {
-            this.name = firebase.auth().currentUser.displayName,
+            this.userName = firebase.auth().currentUser.displayName,
             this.userId = firebase.auth().currentUser.uid,
             this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
           }

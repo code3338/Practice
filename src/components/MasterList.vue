@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
-    <input type="text" v-model="mySearch" name="q" placeholder="search item name..." class="searchInput">
-    <button v-on:click="searchByName(filteredList)" class="searchBtn">search</button>
+    <p><input type="text" v-model="mySearch" name="q" placeholder="search item name..." class="searchInput">
+    <button v-on:click="searchByName(filteredList)" class="searchBtn">search</button></p>
     <br><br>
     <!--masterList data brought to browser.-->
     <div v-for="item in filteredList" class="item">
@@ -51,8 +52,10 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
+import navComponent from "./Nav.vue";
 export default {
-  name:'app',
+  name:"loggedin",
+  components:{navComponent},
   data () {
     return {
       title:"Master List",
@@ -60,7 +63,10 @@ export default {
       groceryList:[],
       groceryListFinal:[],
       filteredList:[],
-      mySearch: ""
+      mySearch: "",
+      userName:"testing name",
+      userId:"testing id",
+      email:"testing email"
     }
   },
   methods: {
@@ -85,7 +91,6 @@ export default {
         else if (this.filteredList.indexOf(searchInput) !== -1) {
           return alert("no match exists");
         }
-
     },
     deleteItem(item) {
         if( confirm("If you delete item, item will be removed from all grocery lists item was added to. Do you still wish to delete this item? ")) {
@@ -120,7 +125,7 @@ export default {
         })
       }
     }
- },
+  },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
     axios.get('http://127.0.0.1:3000')
@@ -151,13 +156,12 @@ export default {
         })
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.name = firebase.auth().currentUser.displayName,
+          this.userName = firebase.auth().currentUser.displayName,
           this.userId = firebase.auth().currentUser.uid,
           this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
         }
       })
     }
-
 }
 
 </script>
@@ -232,6 +236,8 @@ export default {
     width:400px;
     margin:auto;
     margin-bottom:15px;
+    display:inline-block;
+    margin-left:12px;
   }
   .cardBackgroundColor {
     background-color: #e6f2ff;

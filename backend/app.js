@@ -215,7 +215,6 @@ app.patch("/updateitemlist", function(req,res) {
             )
          })
          })
-
          app.post("/viewgrocerylist", function(req,res) {
            console.log(req);
            let transporter = nodemailer.createTransport({
@@ -249,6 +248,7 @@ app.patch("/updateitemlist", function(req,res) {
                 <td style="border:solid 2px #0099cc;border-collapse:collapse;padding:7px;margin:auto;text-align:center;font-size:16px;margin-top:0px">$${req.body.groceryListFinal[i].price}</td>
                </tr>`
              }
+             mailOptions.html += `<div><p style="font-size:17px"><b>Total Price:</b> $${req.body.totalPrice}</p></div>`
            }
            groceryListFinal();
 

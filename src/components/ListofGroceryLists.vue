@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
     <div v-for="groceryList in listofGroceryLists" class="item2 groceryCardBackgroundColor">
       <p class="fontSize"><b>Name:</b> {{groceryList.groceryName}}</p>
@@ -28,13 +29,18 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
+import navComponent from "./Nav.vue";
 let mySearch = document.getElementById("mySearch");
 export default {
-  name:'app',
+  name:"loggedin",
+  components:{navComponent},
   data () {
     return {
       title:"List of Grocery Lists",
-      listofGroceryLists:[]
+      listofGroceryLists:[],
+      userName:"testing name",
+      userId:"testing id",
+      email:"testing email"
     }
   },
   methods: {

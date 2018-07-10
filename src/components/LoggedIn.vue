@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       msg:"Welcome to your profile",
-      name:"testing name",
+      userName:"testing name",
       email:"testing email",
       userId:"testing id"
     }
@@ -31,7 +31,7 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.name = firebase.auth().currentUser.displayName,
+          this.userName = firebase.auth().currentUser.displayName,
           this.email = firebase.auth().currentUser.email,
           this.userId = firebase.auth().currentUser.uid
           this.$bindAsArray("users",db.ref("users/" + this.userId))
@@ -42,9 +42,8 @@ export default {
     save() {
       let user = firebase.auth().currentUser;
       user.updateProfile({
-        displayName:this.name
+        displayName:this.userName
       })
-      console.log(name);
     }
   }
  }

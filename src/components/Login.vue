@@ -3,7 +3,7 @@
     <div>
      {{title}}
     </div>
-   <div id="firebaseui-auth-container"></div>
+   <div id="firebaseui-auth-container" class="signInStyles"></div>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import "firebaseui/dist/firebaseui.css";/*import css file can be found in the fi
 export default {
   data () {
     return {
-      title:"Grocery App Login",
+      title:"Sign In",
     }
   },
   /*Vue event hooks wait until template gets mounted up with mounted with event hook into the DOM*/
@@ -42,5 +42,8 @@ export default {
 
 </script>
 <style>
-
+  .signInStyles {
+    width:250px;
+    margin:auto;
+  }
 </style>

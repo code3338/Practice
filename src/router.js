@@ -3,6 +3,7 @@
 import App from "./App.vue";
 import Login from "./components/Login.vue";
 import LoggedIn from "./components/LoggedIn.vue";
+import Home from "./components/Home.vue";
 import AddItem from "./components/AddItem.vue";
 import CreateGroceryList from "./components/CreateGroceryList.vue";
 import ListofGroceryLists from "./components/ListofGroceryLists.vue";
@@ -16,7 +17,8 @@ const router = new VueRouter ({
   mode:"history", /*Allows us to hit back arrow*/
   routes: [
     {path:"/", component:Login},
-    {path:"/loggedin", component:MasterList},
+    {path:"/loggedin", component:Home},
+    {path:"/home", component:Home},
     {path:"/masterlist", component:MasterList},
     {path:"/additem", component:AddItem},
     {path:"/creategrocerylist", component:CreateGroceryList},

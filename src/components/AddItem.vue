@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
     <div>
       Item name:<br />
@@ -20,8 +21,10 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
+import navComponent from "./Nav.vue";
 export default {
-  name:'app',
+  name:"loggedin",
+  components:{navComponent},
   data () {
     return {
       title:"Add Item",
@@ -30,6 +33,9 @@ export default {
         name: "" ,
         price: 0,
         qty: 0,
+        userName:"testing name",
+        userId:"testing id",
+        email:"testing email"
       }
     }
   },
@@ -57,7 +63,7 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.name = firebase.auth().currentUser.displayName,
+        this.userName = firebase.auth().currentUser.displayName,
         this.userId = firebase.auth().currentUser.uid,
         this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
       }
