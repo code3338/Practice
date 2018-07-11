@@ -12,10 +12,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : pswd.password,
-  database : 'groceryDB'
+  
 });
 
 

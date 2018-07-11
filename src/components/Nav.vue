@@ -1,14 +1,14 @@
 <template>
-<div id="app">
-  <nav id="topNav">
-    <button class="navBtn"><a href="/home" class="link navBtnText">home</a></button>
-    <button class="navBtn"><router-link to="/masterlist" class="link navBtnText">Master List</router-link></button>
-    <button class="navBtn"><router-link to ="/additem" class="link navBtnText">Add Items</router-link></button>
-    <button class="navBtn"><router-link to ="/creategrocerylist" class="link navBtnText">Create Grocery List</router-link></button>
-    <button class="navBtn"><router-link to ="/listofgrocerylists" class="link navBtnText">List of Grocery Lists</router-link></button>
-    <router-view></router-view>
-  </nav>
-</div>
+  <div id="app">
+    <nav id="topNav">
+      <button class="navBtn"><a href="/home" class="link navBtnText">home</a></button>
+      <button class="navBtn"><router-link to="/masterlist" class="link navBtnText">Master List</router-link></button>
+      <button class="navBtn"><router-link to ="/additem" class="link navBtnText">Add Items</router-link></button>
+      <button class="navBtn"><router-link to ="/creategrocerylist" class="link navBtnText">Create Grocery List</router-link></button>
+      <button class="navBtn"><router-link to ="/listofgrocerylists" class="link navBtnText">List of Grocery Lists</router-link></button>
+      <router-view></router-view>
+    </nav>
+  </div>
 </template>
 
 <script>
