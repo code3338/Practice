@@ -2,6 +2,7 @@
   <div id="app">
     <h1 class="title mainTitleColor webpageTitle">{{ msg }}</h1>
     <login-component></login-component>
+    <router-view></router-view> <!-- Without a router view, there is no where for the components to go, as App.vue is always present. router-view is whichever route we click on, we view that route, and we want to view that route in App.vue.-->
     <div><br>
       <img class="groceryCartImg" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX1676725.jpg" width="400">
     </div><br><br>

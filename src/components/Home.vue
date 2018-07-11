@@ -1,3 +1,4 @@
+<template>
 <div id="app">
   <a href="/login" v-on:click="signOut">Sign Out</a><br><br>
   <h1 class="title mainTitleColor webpageTitle">{{ msg }}</h1>
@@ -36,9 +37,9 @@ export default {
        });
      }
    },
-   firebase: {
-     users:db.ref("users")
-   },
+   // firebase: {
+   //   users:db.ref("users")
+   // },
    created() {
      firebase.auth().onAuthStateChanged((user) => {
        if (user) {

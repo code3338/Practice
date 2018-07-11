@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-
+  <div> <!-- id of app should only be in your highest level component-->
+    testing
   </div>
 
 </template>
@@ -36,6 +36,7 @@ export default {
           this.userId = firebase.auth().currentUser.uid
           this.$bindAsArray("users",db.ref("users/" + this.userId))
         }
+        /*bindAsArray is a vueFire thing.*/
     })
   },
   methods: {

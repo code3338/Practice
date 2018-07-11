@@ -1,3 +1,4 @@
+<template>
 <div id="app">
   <nav id="topNav">
     <button class="navBtn"><a href="/home" class="link navBtnText">home</a></button>
