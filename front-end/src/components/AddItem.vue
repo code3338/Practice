@@ -67,7 +67,6 @@ export default {
       if (user) {
         this.userName = firebase.auth().currentUser.displayName,
         this.userId = firebase.auth().currentUser.uid,
-        this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
       }
       else {
         /*Kick the user back to the Login page if they do not exist. */

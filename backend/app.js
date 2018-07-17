@@ -15,10 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let connection = mysql.createConnection({
-  host     : 'den1.mysql1.gear.host',
-  user     : 'deployment5',
-  password : 'Kr51gau!q2!q',
-  database : 'deployment5'
+  
 });
 
 
