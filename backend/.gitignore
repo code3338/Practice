@@ -1,9 +1,7 @@
 .DS_Store
 node_modules/
-dist/
 npm-debug.log
 yarn-error.log
-./backend/front-end/src/utils/firebaseConfig.js
 
 # Editor directories and files
 .idea
