@@ -15,6 +15,7 @@
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
+import './src/bulma/css/bulma.css';
 export default {
 name: 'loggedin',
 data () {

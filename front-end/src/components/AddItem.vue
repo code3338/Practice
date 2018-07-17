@@ -22,6 +22,7 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
+import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   components:{navComponent},

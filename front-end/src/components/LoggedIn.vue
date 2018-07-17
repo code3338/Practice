@@ -1,6 +1,6 @@
 <template>
   <div> <!-- id of app should only be in your highest level component-->
-    
+
   </div>
 
 </template>
@@ -12,6 +12,7 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css"; /*import css file can be found in the firebaseui module. All we need to do is impor tthe stylesheet here.*/
 import db from"../utils/firebaseConfig.js";
+import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   data () {

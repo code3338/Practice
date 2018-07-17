@@ -32,6 +32,7 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
+import './src/bulma/css/bulma.css';
 let mySearch = document.getElementById("mySearch");
 export default {
   name:"loggedin",
