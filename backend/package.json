@@ -2,6 +2,9 @@
   "name": "final_project",
   "description": "A Vue.js project",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.11.1"
+  },
   "author": "code3338 <code3338@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -12,7 +15,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
-    "bulma": "file:bulma",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "firebase": "^5.2.0",

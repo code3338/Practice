@@ -8,11 +8,16 @@ let bodyParser =require("body-parser");
 const nodemailer = require("nodemailer");
 let app = express();
 
+const port = process.env.PORT || 3000
+
 app.use(bodyParser.json());
 app.use(cors());
 
 let connection = mysql.createConnection({
-  
+  host     : 'den1.mysql3.gear.host',
+  user     : 'deployment5',
+  password : 'Mu7I2i?7P29?',
+  database : 'deployment5'
 });
 
 
@@ -21,7 +26,7 @@ connection.connect();
 /*Front-end posts data (name,price,qty) to server, and server inserts data into mySQL groceryDB database in the productList table.*/
 app.post("/item", function(req,res) {
   console.log(req.body);
-  connection.query(`INSERT INTO productList (productName,price,QTY) VALUES ("${req.body.name}",${req.body.price},${req.body.qty})`, function(error,results,fields) {
+  connection.query(`INSERT INTO productList (productName,price,QTY,userId) VALUES ("${req.body.name}",${req.body.price},${req.body.qty},"${req.body.userId}")`, function(error,results,fields) {
     if (error) throw error;
     res.send("entry created");
   })
@@ -30,17 +35,15 @@ app.post("/item", function(req,res) {
 /*Front-end posts data(name, description) to the server, and the server inserts this data into mySQL groceryDB database in the groceryListCreate table.*/
  app.post("/creategrocerylist", function(req,res) {
    console.log(req.body);
-   connection.query(`INSERT INTO groceryListCreate (groceryName,groceryDescription) VALUES ("${req.body.name}","${req.body.description}")`, function(error,results,fields) {
+   connection.query(`INSERT INTO groceryListCreate (groceryName,groceryDescription,userId) VALUES ("${req.body.name}","${req.body.description}","${req.body.userId}")`, function(error,results,fields) {
      if (error) throw error;
      res.send("entry created");
    })
   })
-
-
 /*Get data from mySQL groceryDB database's productList table, and send information back to front-end.*/
- app.get("/", function(req,res) {
+ app.get("/masterlist/:id", function(req,res) {
   let masterListArray;
-  connection.query('SELECT productId, productName, price, QTY FROM productList', function (error, results, fields) {
+  connection.query(`SELECT productId, productName, price, QTY FROM productList WHERE userId ="${req.params.id}"`, function (error, results, fields) {
      if (error) throw error; {
     }
     masterListArray = results; /*results comes from database query. Argument found in the function above.*/
@@ -50,9 +53,9 @@ app.post("/item", function(req,res) {
  })
 })
 
-app.get("/listofgrocerylists", function(req,res) {
+app.get("/listofgrocerylists/:id", function(req,res) {
  let groceryListArray;
- connection.query('SELECT groceryId, groceryName, groceryDescription FROM groceryListCreate', function (error, results, fields) {
+ connection.query(`SELECT groceryId, groceryName, groceryDescription,userId FROM groceryListCreate WHERE userId = "${req.params.id}"`, function (error, results, fields) {
     if (error) throw error; {
    }
    groceryListArray = results; /*results comes from database query. Argument found in the function above.*/
@@ -61,6 +64,8 @@ app.get("/listofgrocerylists", function(req,res) {
    )
 })
 })
+
+
 
 app.delete("/:id", function(req,res) {
   connection.query("DELETE FROM groceryListCreate WHERE groceryId=" + req.params.id, function(error, results, fields) {
@@ -130,11 +135,11 @@ app.patch("/updateitemlist", function(req,res) {
     res.send("deleted:" + req.params.id);
   })
 
-  app.get("/getgrocerylistname", function(req,res) {
+  app.get("/getgrocerylistname/:id", function(req,res) {
     /*request.params is where request was received.
     Note: params is from the url.*/
       let groceryNameArray;
-       connection.query(`SELECT groceryId, groceryName FROM groceryListCreate`,
+       connection.query(`SELECT groceryId, groceryName FROM groceryListCreate WHERE userId = "${req.params.id}"`,
          function(error,results,fields) {
          if (error) throw error; {
          }
@@ -142,19 +147,6 @@ app.patch("/updateitemlist", function(req,res) {
          res.send(groceryNameArray)
       })
     })
-    app.get("/qtyfromfinal", function(req,res) {
-      /*request.params is where request was received.
-      Note: params is from the url.*/
-        let groceryQtyArray;
-         connection.query(`SELECT groceryId,QTY FROM groceryListFinal`,
-           function(error,results,fields) {
-           if (error) throw error; {
-           }
-           groceryQtyArray=results;
-           res.send(groceryQtyArray)
-        })
-      })
-
     app.post("/additemtogrocerylist", function(req,res) {
       console.log(req.body);
       connection.query(`INSERT INTO groceryListFinal (groceryId,productId,QTY) VALUES (${req.body.groceryId},${req.body.productId},${req.body.qty})`, function(error,results,fields) {
@@ -240,6 +232,7 @@ app.patch("/updateitemlist", function(req,res) {
            </tr>
            </table><br>
           `
+
            function groceryListFinal() {
              for(let i = 0; i < req.body.groceryListFinal.length; i++) {
                mailOptions.html += `<tr>
@@ -262,4 +255,4 @@ app.patch("/updateitemlist", function(req,res) {
            })
 
        })
-app.listen(3000);
+app.listen(port);

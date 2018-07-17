@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav-component></nav-component><br><br>
-    <h2 class="title">{{title}}</h2>
-    <div>
+    <h2 class="title7">{{title}}</h2>
+    <div class="updateItemMargin">
       Item Name:<br />
       <input v-model="item.productName" class="itemName"><br /><br />
       Price:<br />
@@ -70,6 +70,10 @@ export default {
         this.userId = firebase.auth().currentUser.uid,
         this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
       }
+      else {
+        /*Kick the user back to the Login page if they do not exist. */
+        window.location.href="/"
+      }
     })
   }
 }
@@ -77,6 +81,14 @@ export default {
 </script>
 
 <style>
+  .updateItemMargin {
+    margin-top:12px;
+  }
+ .title7 {
+   margin-top:35px;
+   font-weight:bold;
+   font-size:28px;
+  }
   .groceryCartImg {
    display:none;
    }
@@ -90,5 +102,15 @@ export default {
    width:280px;
    margin:auto;
    text-align:center;
+  }
+  @media(max-width:380px) {
+    .updateItemMargin {
+      margin-top:12px;
+    }
+   .title7 {
+     margin-top:85px;
+     font-weight:bold;
+     font-size:28px;
+    }
   }
 </style>

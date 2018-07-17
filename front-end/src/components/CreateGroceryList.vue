@@ -2,7 +2,7 @@
   <div id="app">
     <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
-    <div>
+    <div class="createListMargin">
       Name:<br />
       <input v-model="groceryList.name" class="itemName"><br /><br />
       Description:<br />
@@ -42,7 +42,8 @@ export default {
     addGroceryList(groceryList) {
       axios.post('http://127.0.0.1:3000/creategrocerylist', {
         name:groceryList.name,
-        description:groceryList.description
+        description:groceryList.description,
+        userId:this.userId
       })
       .then(function (response) {
         console.log(response);
@@ -65,6 +66,10 @@ export default {
         this.userId = firebase.auth().currentUser.uid,
         this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
       }
+      else {
+        /*Kick the user back to the Login page if they do not exist. */
+        window.location.href="/"
+      }
     })
   }
 }
@@ -72,6 +77,17 @@ export default {
 </script>
 
 <style>
+  .createListMargin {
+    margin-top:70px;
+  }
+  .title {
+    font-weight:bold;
+    font-size:28px;
+    position:fixed;
+    top:135px;
+    left:1%;
+    right:1%;
+  }
   .itemName {
     width:200px;
   }
@@ -88,4 +104,29 @@ export default {
    margin:auto;
    text-align:center;
   }
+  @media(max-width:680px) {
+    .createListMargin {
+      margin-top:80px;
+    }
+    .title {
+      top:145px;
+    }
+  }
+  @media(max-width:377px) {
+    .createListMargin {
+      margin-top:120px;
+    }
+    .title {
+      top:180px;
+    }
+  }
+  @media(max-width:295px) {
+    .createListMargin {
+      margin-top:165px;
+    }
+    .title {
+      top:205px;
+    }
+  }
+
 </style>

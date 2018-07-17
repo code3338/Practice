@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav-component></nav-component><br><br>
-    <h2 class="title">{{title}}</h2>
-    <div>
+    <h2 class="title2">{{title}}</h2>
+    <div class="updateMargin">
       Name:<br />
       <input v-model="groceryList.groceryName" class="groceryName2"><br /><br />
       Description:<br />
@@ -14,7 +14,7 @@
       </button>
     </div><br>
     <div class="tableDiv">
-      <h3 class="title">Grocery Items</h3>
+      <h3 class="title3">Grocery Items</h3>
       <button v-on:click="updateItemList()" class="button is-primary is-outlined buttonBold flex2"><span>Update item QTY</span>
         <span class="icon is-small">
           <i class="far fa-edit"></i>
@@ -140,6 +140,10 @@ export default {
             this.userId = firebase.auth().currentUser.uid,
             this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
           }
+          else {
+            /*Kick the user back to the Login page if they do not exist. */
+            window.location.href="/"
+          }
       })
    }
  }
@@ -148,9 +152,21 @@ export default {
 </script>
 
 <style>
-  .groceryCartImg {
-   display:none;
+  .updateMargin {
+    margin-top:15px;
   }
+  .title2 {
+    font-weight:bold;
+    font-size:28px;
+    margin-top:35px;
+    margin-bottom:12px;
+  }
+  .title3 {
+    font-weight:bold;
+    font-size:28px;
+    margin-bottom:25px;
+  }
+
   table,th,td {
     border: 2px solid #0099cc;
     border-collapse: collapse;
@@ -200,6 +216,11 @@ export default {
       width:85%;
     }
   }
+  @media(max-width:380px) {
+    .title2 {
+      margin-top:75px;
+    }
+  }
   @media(max-width:320px) {
     .deleteButton3 {
       width:50px;
@@ -225,5 +246,10 @@ export default {
        width:40px;
        margin:auto;
       }
+  }
+  @media(max-width:295px) {
+    .title2 {
+      margin-top:95px;
+    }
   }
 </style>

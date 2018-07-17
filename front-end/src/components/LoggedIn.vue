@@ -1,6 +1,6 @@
 <template>
   <div> <!-- id of app should only be in your highest level component-->
-    testing
+    
   </div>
 
 </template>

@@ -2,46 +2,50 @@
   <div id="app">
     <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
-    <p><input type="text" v-model="mySearch" name="q" placeholder="search item name..." class="searchInput">
-    <button v-on:click="searchByName(filteredList)" class="searchBtn">search</button></p>
-    <br><br>
+    <div class="searchMargin">
+      <p><input type="text" v-model="mySearch" name="q" placeholder="search item name..." class="searchInput">
+      <button v-on:click="searchByName(filteredList)" class="searchBtn">search</button></p>
+    </div>
+    <br>
     <!--masterList data brought to browser.-->
-    <div v-for="item in filteredList" class="item">
-      <div class="lineSpacing cardBackgroundColor">
-         <p><b>Item Id:</b> {{item.productId}}</p>
-         <p><b>Item Name:</b> {{item.productName}}<p>
-         <div>
-           <p><b>Price:</b> $ {{item.price}}</p>
+    <div class="cardMargin">
+      <div v-for="item in filteredList" class="item">
+        <div class="lineSpacing cardBackgroundColor">
+           <p><b>Item Id:</b> {{item.productId}}</p>
+           <p><b>Item Name:</b> {{item.productName}}<p>
+           <div>
+             <p><b>Price:</b> $ {{item.price}}</p>
+           </div>
          </div>
-       </div>
-      <div class="flex borderBottom cardBackgroundColor">
-        <button class="button is-primary is-outlined buttonBold flex2 updateItemButton"><router-link :to="{path:'/updateitem/' + item.productId}" class="link buttonBold"><span>Update item</span>
-          <span class="icon is-small">
-            <i class="far fa-edit"></i>
-          </span>
-        </router-link></button><br><br>
-        <button v-on:click="deleteItem(item)" class="button is-danger is-outlined buttonBold flex2"><span>Delete item</span>
-          <span class="icon is-small">
-            <i class="fas fa-times"></i>
-          </span>
-        </button><br><br>
-      </div>
-      <div>
-        <p class="addItemGroceryTitle">Add Item to Grocery List:</p>
-        <b>QTY:</b><input v-model="item.QTY" class="qty">
-      </div><br>
-      <div class="flex align">
-        <label class="groceryLabel selectList">Select List:</label>
-        <div class="select is-info marginAuto">
-          <select v-bind:id="item.productId" class="flex1">
-            <option v-for="grocery in groceryList" v-bind:value="grocery.groceryId" v-bind:id="grocery.groceryName">{{grocery.groceryName}}</option>
-          </select>
-        </div>
-        <button v-on:click="addItem(item)" class="flex2 button is-success is-outlined buttonBold addItemButton"><span>Add item</span>
+        <div class="flex borderBottom cardBackgroundColor">
+          <button class="button is-primary is-outlined buttonBold flex2 updateItemButton"><router-link :to="{path:'/updateitem/' + item.productId}" class="is-primary link buttonBold"><span>Update item</span>
             <span class="icon is-small">
-              <i class="fas fa-plus"></i>
+              <i class="far fa-edit"></i>
             </span>
-        </button>
+          </router-link></button><br><br>
+          <button v-on:click="deleteItem(item)" class="button is-danger is-outlined buttonBold flex2"><span>Delete item</span>
+            <span class="icon is-small">
+              <i class="fas fa-times"></i>
+            </span>
+          </button><br><br>
+        </div>
+        <div>
+          <p class="addItemGroceryTitle">Add Item to Grocery List:</p>
+          <b>QTY:</b><input v-model="item.QTY" class="qty">
+        </div><br>
+        <div class="flex align">
+          <label class="groceryLabel selectList">Select List:</label>
+          <div class="select is-info marginAuto">
+            <select v-bind:id="item.productId" class="flex1 grocerySelect">
+              <option v-for="grocery in groceryList" v-bind:value="grocery.groceryId" v-bind:id="grocery.groceryName">{{grocery.groceryName}}</option>
+            </select>
+          </div>
+          <button v-on:click="addItem(item)" class="flex2 button is-success is-outlined buttonBold addItemButton"><span>Add item</span>
+              <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+              </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -61,7 +65,6 @@ export default {
       title:"Master List",
       masterList:[],
       groceryList:[],
-      groceryListFinal:[],
       filteredList:[],
       mySearch: "",
       userName:"testing name",
@@ -71,29 +74,23 @@ export default {
   },
   methods: {
     searchByName(filteredList) {
-      let searchInput= this.mySearch.toUpperCase();
+      let searchInput = this.mySearch.toUpperCase();
       function searchName(item) {
         if(item.productName.toUpperCase() == searchInput) {
             return true;
-        }
-        else if(item.productName.toUpperCase() != searchInput && item.productName.toUpperCase() == searchInput) {
-          return location.reload()
         }
         else if(searchInput == "") {
           return location.reload()
         }
       }
-        /*filter method looks through item(or object) in an array, and return those that return true from the function searchName.*/
-        this.filteredList = this.masterList.filter(searchName);
-        if(this.filteredList.indexOf(searchInput) === -1) {
-          return searchName();
-        }
-        else if (this.filteredList.indexOf(searchInput) !== -1) {
-          return alert("no match exists");
-        }
+      this.filteredList = this.masterList.filter(searchName);
+      if(this.filteredList.length == 0) {
+        alert("Item name does not exist. Try again!")
+        return location.reload();
+      }
     },
     deleteItem(item) {
-        if( confirm("If you delete item, item will be removed from all grocery lists item was added to. Do you still wish to delete this item? ")) {
+        if( confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
           axios.delete('http://127.0.0.1:3000/deleteitem/' + item.productId)
             .then(function (response) {
               console.log(response);
@@ -128,7 +125,7 @@ export default {
   },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
-    axios.get('http://127.0.0.1:3000')
+    axios.get('http://127.0.0.1:3000/masterlist/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.masterList=response.data
@@ -137,7 +134,7 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-    axios.get('http://127.0.0.1:3000/getgrocerylistname')
+    axios.get('http://127.0.0.1:3000/getgrocerylistname/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.groceryList=response.data
@@ -145,20 +142,17 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-      axios.get('http://127.0.0.1:3000/qtyfromfinal')
-        .then((response) => {
-          console.log(response);
-          this.groceryListFinal=response.data
-
-        })
         .catch((error) => {
           console.log(error);
         })
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.userName = firebase.auth().currentUser.displayName,
-          this.userId = firebase.auth().currentUser.uid,
-          this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+          this.userId = firebase.auth().currentUser.uid
+        }
+        else {
+          /*Kick the user back to the Login page if they do not exist. */
+          window.location.href="/"
         }
       })
     }
@@ -167,8 +161,21 @@ export default {
 </script>
 
 <style>
+ .grocerySelect {
+    width:190px;
+  }
  .searchInput {
    width:220px;
+ }
+ .searchMargin {
+   position:fixed;
+   left:1%;
+   right:1%;
+   top:200px;
+   z-index:1;
+ }
+ .cardMargin {
+   margin-top:115px;
  }
  .groceryCartImg {
    display:none;
@@ -177,6 +184,10 @@ export default {
    margin:auto;
  }
  .title {
+   position:fixed;
+   left:1%;
+   right:1%;
+   top:115px;
    font-weight:bold;
    font-size:28px;
  }
@@ -258,6 +269,11 @@ export default {
       width:400px;
     }
   }
+  @media(max-width:680px) {
+    .title {
+      top:150px;
+    }
+  }
   @media(max-width:480px) {
     .item {
       width:90%;
@@ -286,6 +302,28 @@ export default {
     }
     .searchInput {
       width:165px;
+    }
+  @media(max-width:375px) {
+      .title {
+        top:100px;
+      }
+      .searchMargin {
+        top:235px;
+      }
+      .cardMargin {
+        margin-top:150px;
+      }
+    }
+    @media(max-width:295px) {
+      .title {
+        top:205px;
+      }
+      .searchMargin {
+        top:245px;
+      }
+      .cardMargin {
+        margin-top:155px;
+      }
     }
   }
 </style>

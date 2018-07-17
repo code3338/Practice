@@ -2,8 +2,8 @@
   <div id="app">
     <nav-component></nav-component><br><br>
     <div>
-      <h2 class="title">{{groceryListName.groceryName}}</h2>
-      <p class="groceryDescription">({{groceryListName.groceryDescription}})</p>
+      <h2 class="title5">{{groceryListName.groceryName}}</h2>
+      <p class="groceryDescription title4">({{groceryListName.groceryDescription}})</p>
     </div><br>
     <div>
       <table class="marginTable">
@@ -22,7 +22,7 @@
         <p class="totalTitle"><b>Total:</b></p><p>${{totalPrice}}</p>
       </div><br>
       <div>
-        <p class="title emailTitleStyling">Send List to email:</p>
+        <p class="title3 emailTitleStyling">Send List to email:</p>
         <p><b>Email Address:</b></p>
         <input v-model="email" type="text" class="itemName"><br><br>
         <p><b>Add email content:</b></p>
@@ -53,7 +53,7 @@ export default {
       textarea:"",
       userName:"testing name",
       userId:"testing id",
-      email:"testing email"
+      email:""
     }
   },
   methods: {
@@ -117,6 +117,10 @@ export default {
             this.userId = firebase.auth().currentUser.uid,
             this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
           }
+          else {
+            /*Kick the user back to the Login page if they do not exist. */
+            window.location.href="/"
+          }
        })
     }
 }
@@ -124,6 +128,20 @@ export default {
 </script>
 
 <style>
+  .title5 {
+    font-weight:bold;
+    font-size:28px;
+    margin-top:35px;
+    margin-bottom:2px;
+  }
+  .title3 {
+    font-weight:bold;
+    font-size:28px;
+    margin-bottom:25px;
+  }
+  .title4 {
+    margin-top:1px;
+  }
   .groceryCartImg {
     display:none;
   }
@@ -163,5 +181,15 @@ export default {
    width:280px;
    margin:auto;
    text-align:center;
+  }
+  @media(max-width:385px) {
+    .title5 {
+      margin-top:75px;
+    }
+  }
+  @media(max-width:295px) {
+    .title5 {
+      margin-top:100px;
+    }
   }
 </style>

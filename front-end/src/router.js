@@ -19,10 +19,10 @@ const router = new VueRouter ({
     {path:"/", component:Login},
     {path:"/loggedin", component:Home},
     {path:"/home", component:Home},
-    {path:"/masterlist", component:MasterList},
+    {path:"/masterlist/:id", component:MasterList},
     {path:"/additem", component:AddItem},
     {path:"/creategrocerylist", component:CreateGroceryList},
-    {path:"/listofgrocerylists", component:ListofGroceryLists},
+    {path:"/listofgrocerylists/:id", component:ListofGroceryLists},
     {path:"/viewgrocerylist/:id", component:ViewGroceryList},
     {path:"/updategrocerylist/:id", component:UpdateGroceryList},
     {path:"/updateitem/:id", component:UpdateItem}

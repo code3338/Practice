@@ -2,7 +2,7 @@
   <div id="app">
     <nav-component></nav-component><br><br>
     <h2 class="title">{{title}}</h2>
-    <div>
+    <div class="addItemMargin">
       Item name:<br />
       <input v-model="item.name" class="itemName"><br /><br />
       price:<br />
@@ -44,7 +44,8 @@ export default {
       axios.post('http://127.0.0.1:3000/item', {
         name:item.name,
         price:item.price,
-        qty:item.qty
+        qty:item.qty,
+        userId:this.userId
       })
       .then(function (response) {
         console.log(response);
@@ -67,6 +68,10 @@ export default {
         this.userId = firebase.auth().currentUser.uid,
         this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
       }
+      else {
+        /*Kick the user back to the Login page if they do not exist. */
+        window.location.href="/"
+      }
     })
   }
 }
@@ -74,6 +79,20 @@ export default {
 </script>
 
 <style>
+#signOut {
+  display:block;
+}
+.addItemMargin {
+  margin-top:70px;
+}
+.title {
+  font-weight:bold;
+  font-size:28px;
+  position:fixed;
+  top:135px;
+  left:1%;
+  right:1%;
+}
  .groceryCartImg {
    display:none;
   }
@@ -87,5 +106,29 @@ export default {
    width:280px;
    margin:auto;
    text-align:center;
+  }
+  @media(max-width:680px) {
+    .addItemMargin {
+      margin-top:80px;
+    }
+    .title {
+      top:145px;
+    }
+  }
+  @media(max-width:377px) {
+    .addItemMargin {
+      margin-top:125px;
+    }
+    .title {
+      top:190px;
+    }
+  }
+  @media(max-width:295px) {
+    .addItemMargin {
+      margin-top:135px;
+    }
+    .title {
+      top:205px;
+    }
   }
 </style>
