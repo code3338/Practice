@@ -6,17 +6,18 @@ let pswd = require("./pswd.js");
 let mysql=require("mysql");
 let bodyParser =require("body-parser");
 const nodemailer = require("nodemailer");
-let app = express();
 
 const port = process.env.PORT || 3000
+
+let app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
 let connection = mysql.createConnection({
-  host     : 'den1.mysql3.gear.host',
+  host     : 'den1.mysql1.gear.host',
   user     : 'deployment5',
-  password : 'Mu7I2i?7P29?',
+  password : 'Kr51gau!q2!q',
   database : 'deployment5'
 });
 
