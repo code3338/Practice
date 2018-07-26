@@ -15,7 +15,6 @@
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
-import './src/bulma/css/bulma.css';
 export default {
 name: 'loggedin',
 data () {
@@ -44,6 +43,8 @@ created() {
   left:1%;
   right:1%;
   z-index:1;
+  background-color:white;
+  height:45px;
 }
 .navBtn {
 background-color:#009900;
@@ -87,6 +88,7 @@ color: #42b983;
 @media(max-width:295px) {
   #topNav {
     top:90px;
+    height:115px;
   }
 }
 </style>

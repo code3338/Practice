@@ -13,7 +13,6 @@ import firebase from "firebase";
 import firebaseui from "firebaseui";
 import config from "../utils/firebaseConfig.js";
 import "firebaseui/dist/firebaseui.css";
-import './src/bulma/css/bulma.css';/*import css file can be found in the firebaseui module. All we need to do is impor tthe stylesheet here.*/
 export default {
   data () {
     return {

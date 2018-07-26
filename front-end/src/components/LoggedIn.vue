@@ -12,7 +12,6 @@ import axios from "axios";
 import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css"; /*import css file can be found in the firebaseui module. All we need to do is impor tthe stylesheet here.*/
 import db from"../utils/firebaseConfig.js";
-import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   data () {
@@ -32,10 +31,9 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.userName = firebase.auth().currentUser.displayName,
-          this.email = firebase.auth().currentUser.email,
-          this.userId = firebase.auth().currentUser.uid
-          this.$bindAsArray("users",db.ref("users/" + this.userId))
+          this.userName = firebase.auth().currentUser.displayName;
+          this.email = firebase.auth().currentUser.email;
+          this.userId = firebase.auth().currentUser.uid;
         }
         /*bindAsArray is a vueFire thing.*/
     })

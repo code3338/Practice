@@ -39,7 +39,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   components:{navComponent},
@@ -59,7 +58,7 @@ export default {
   },
   methods: {
     sendEmail() {
-      axios.post('http://127.0.0.1:3000/viewgrocerylist', {
+      axios.post('https://afternoon-hollows-32021.herokuapp.com/viewgrocerylist', {
         email:this.email,
         text:this.textarea,
         groceryListName:this.groceryListName.groceryName,
@@ -88,7 +87,7 @@ export default {
     }
   },
   created() {
-      axios.get('http://127.0.0.1:3000/grocerylistfinal/' + this.$route.params.id)
+      axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
         .then((response) => {
           console.log(response);
           this.groceryListFinal=response.data
@@ -96,7 +95,7 @@ export default {
         .catch((error) => {
           console.log(error);
         })
-        axios.get('http://127.0.0.1:3000/grocerylist/' + this.$route.params.id)
+        axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylist/' + this.$route.params.id)
           .then((response) => {
             console.log(response);
             this.groceryList=response.data
@@ -104,7 +103,7 @@ export default {
           .catch((error) => {
             console.log(error);
           })
-          axios.get('http://127.0.0.1:3000/listofgrocerylists2/' + this.$route.params.id)
+          axios.get('https://afternoon-hollows-32021.herokuapp.com/listofgrocerylists2/' + this.$route.params.id)
             .then((response) => {
               console.log(response);
               this.groceryListName=response.data[0]
@@ -114,9 +113,8 @@ export default {
             })
        firebase.auth().onAuthStateChanged((user) => {
           if (user) {
-            this.userName = firebase.auth().currentUser.displayName,
-            this.userId = firebase.auth().currentUser.uid,
-            this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+            this.userName = firebase.auth().currentUser.displayName;
+            this.userId = firebase.auth().currentUser.uid;
           }
           else {
             /*Kick the user back to the Login page if they do not exist. */

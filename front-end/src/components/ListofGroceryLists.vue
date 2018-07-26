@@ -32,7 +32,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 let mySearch = document.getElementById("mySearch");
 export default {
   name:"loggedin",
@@ -50,11 +49,11 @@ export default {
   methods: {
     deleteGroceryList(groceryList) {
       if(confirm("Are you sure you want to delete this grocery list?")) {
-        axios.delete('http://127.0.0.1:3000/' + groceryList.groceryId)
+        axios.delete('https://afternoon-hollows-32021.herokuapp.com/' + groceryList.groceryId)
           .then(function (response) {
             console.log(response);
+            location.reload();
           })
-        location.reload();
       }
       else {
         console.log("Not deleted");
@@ -63,7 +62,7 @@ export default {
   },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
-    axios.get('http://127.0.0.1:3000/listofgrocerylists/' + this.$route.params.id)
+    axios.get('https://afternoon-hollows-32021.herokuapp.com/listofgrocerylists/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.listofGroceryLists = response.data;
@@ -73,8 +72,8 @@ export default {
       })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.name = firebase.auth().currentUser.displayName,
-        this.userId = firebase.auth().currentUser.uid
+        this.name = firebase.auth().currentUser.displayName;
+        this.userId = firebase.auth().currentUser.uid;
       }
       else {
         /*Kick the user back to the Login page if they do not exist. */

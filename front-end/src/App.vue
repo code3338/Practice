@@ -20,7 +20,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from "./utils/firebaseConfig.js";
 import footerComponent from "./components/Footer.vue";
-import './src/bulma/css/bulma.css';
 export default {
   name: 'app',
   components:{footerComponent},

@@ -22,7 +22,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 let mySearch = document.getElementById("mySearch");
 export default {
   name:"loggedin",
@@ -38,7 +37,7 @@ export default {
   },
   methods: {
     updateItem(item) {
-      axios.patch('http://127.0.0.1:3000/updateitem', {
+      axios.patch('https://afternoon-hollows-32021.herokuapp.com/updateitem', {
         productId:item.productId,
         productName:item.productName,
         price:item.price,
@@ -57,7 +56,7 @@ export default {
     }
   },
   created() {
-    axios.get('http://127.0.0.1:3000/updateitem/' + this.$route.params.id)
+    axios.get('https://afternoon-hollows-32021.herokuapp.com/updateitem/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.item=response.data[0]
@@ -67,9 +66,8 @@ export default {
       })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.userName = firebase.auth().currentUser.displayName,
-        this.userId = firebase.auth().currentUser.uid,
-        this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+        this.userName = firebase.auth().currentUser.displayName;
+        this.userId = firebase.auth().currentUser.uid;
       }
       else {
         /*Kick the user back to the Login page if they do not exist. */

@@ -22,7 +22,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   components:{navComponent},
@@ -42,7 +41,7 @@ export default {
   },
   methods: {
     addItem(item) {
-      axios.post('http://127.0.0.1:3000/item', {
+      axios.post('https://afternoon-hollows-32021.herokuapp.com/item', {
         name:item.name,
         price:item.price,
         qty:item.qty,
@@ -65,8 +64,8 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.userName = firebase.auth().currentUser.displayName,
-        this.userId = firebase.auth().currentUser.uid,
+        this.userName = firebase.auth().currentUser.displayName;
+        this.userId = firebase.auth().currentUser.uid;
       }
       else {
         /*Kick the user back to the Login page if they do not exist. */

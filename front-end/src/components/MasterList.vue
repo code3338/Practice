@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-component></nav-component><br><br>
-    <h2 class="title">{{title}}</h2>
+    <h2 class="title masterTitle">{{title}}</h2>
     <div class="searchMargin">
       <p><input type="text" v-model="mySearch" name="q" placeholder="search item name..." class="searchInput">
       <button v-on:click="searchByName(filteredList)" class="searchBtn">search</button></p>
@@ -57,7 +57,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 export default {
   name:"loggedin",
   components:{navComponent},
@@ -92,11 +91,12 @@ export default {
     },
     deleteItem(item) {
         if( confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
-          axios.delete('http://127.0.0.1:3000/deleteitem/' + item.productId)
+          axios.delete('https://afternoon-hollows-32021.herokuapp.com/deleteitem/' + item.productId)
             .then(function (response) {
               console.log(response);
+              location.reload();
             })
-          location.reload();
+
         }
         else {
           console.log("not deleted");
@@ -110,7 +110,7 @@ export default {
       }
       else {
         alert("Item has been added to Grocery List.");
-        axios.post('http://127.0.0.1:3000/additemtogrocerylist', {
+        axios.post('https://afternoon-hollows-32021.herokuapp.com/additemtogrocerylist', {
           productId:item.productId,
           groceryId:value,
           qty:value2
@@ -126,7 +126,7 @@ export default {
   },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
-    axios.get('http://127.0.0.1:3000/masterlist/' + this.$route.params.id)
+    axios.get('https://afternoon-hollows-32021.herokuapp.com/masterlist/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.masterList=response.data
@@ -135,7 +135,7 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-    axios.get('http://127.0.0.1:3000/getgrocerylistname/' + this.$route.params.id)
+    axios.get('https://afternoon-hollows-32021.herokuapp.com/getgrocerylistname/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.groceryList=response.data
@@ -148,8 +148,8 @@ export default {
         })
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.userName = firebase.auth().currentUser.displayName,
-          this.userId = firebase.auth().currentUser.uid
+          this.userName = firebase.auth().currentUser.displayName;
+          this.userId = firebase.auth().currentUser.uid;
         }
         else {
           /*Kick the user back to the Login page if they do not exist. */
@@ -191,6 +191,10 @@ export default {
    top:115px;
    font-weight:bold;
    font-size:28px;
+   background-color:white;
+ }
+ .masterTitle {
+   height:110px;
  }
  .addItemGroceryTitle {
     font-weight:bold;
@@ -274,6 +278,9 @@ export default {
     .title {
       top:150px;
     }
+    .masterTitle {
+      height:80px;
+    }
   }
   @media(max-width:480px) {
     .item {
@@ -306,7 +313,10 @@ export default {
     }
   @media(max-width:375px) {
       .title {
-        top:100px;
+        top:170px;
+      }
+      .masterTitle {
+        height: 90px;
       }
       .searchMargin {
         top:235px;

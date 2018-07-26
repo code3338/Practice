@@ -55,7 +55,6 @@ import firebase from "firebase";
 import "firebaseui/dist/firebaseui.css";
 import db from"../utils/firebaseConfig.js";
 import navComponent from "./Nav.vue";
-import './src/bulma/css/bulma.css';
 let mySearch = document.getElementById("mySearch");
 export default {
   name:"loggedin",
@@ -72,7 +71,7 @@ export default {
   },
   methods: {
     updateGroceryList(groceryList) {
-      axios.patch('http://127.0.0.1:3000/updategrocerylist', {
+      axios.patch('https://afternoon-hollows-32021.herokuapp.com/updategrocerylist', {
         groceryId:groceryList.groceryId,
         name:groceryList.groceryName,
         description:groceryList.groceryDescription
@@ -89,15 +88,17 @@ export default {
         this.groceryList.groceryDescription=""
     },
     deleteItem(groceryItem) {
-      axios.delete('http://127.0.0.1:3000/deleteitemfromgrocerylist/' + groceryItem.id)
+      axios.delete('https://afternoon-hollows-32021.herokuapp.com/deleteitemfromgrocerylist/' + groceryItem.id)
         .then(function (response) {
           console.log(response);
+          location.reload();
         })
-      location.reload();
+
     },
     updateItemList() {
-      for(let i = 0; this.groceryItemList.length; i++) {
-        axios.patch('http://127.0.0.1:3000/updategrocerylistitems', {
+      for(let i = 0; i < this.groceryItemList.length; i++) {
+        //console.log(this.groceryItemList[i]);
+        axios.patch('https://afternoon-hollows-32021.herokuapp.com/updategrocerylistitems', {
           id:this.groceryItemList[i].id,
           qty:this.groceryItemList[i].QTY
         })
@@ -106,11 +107,11 @@ export default {
             /*Response was sent back from the backend with res.send*/
             /*Note: do not return data here, as we do not want to update the front end with a for loop.*/
             console.log(this.groceryItemList);
+            location.reload();
           })
           .catch((error) => {
             console.log(error);
           })
-          location.reload();
       }
     },
     qtyColor(index) {
@@ -119,7 +120,7 @@ export default {
     }
   },
   created() {
-    axios.get('http://127.0.0.1:3000/updategrocerylist/' + this.$route.params.id)
+    axios.get('https://afternoon-hollows-32021.herokuapp.com/updategrocerylist/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.groceryList=response.data[0]
@@ -127,7 +128,7 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-      axios.get('http://127.0.0.1:3000/grocerylistfinal/' + this.$route.params.id)
+      axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
         .then((response) => {
           console.log(response);
           this.groceryItemList=response.data
@@ -137,9 +138,8 @@ export default {
         })
       firebase.auth().onAuthStateChanged((user) => {
           if (user) {
-            this.userName = firebase.auth().currentUser.displayName,
-            this.userId = firebase.auth().currentUser.uid,
-            this.$bindAsArray("users",db.ref("users/" + this.userId + "/movies"))
+            this.userName = firebase.auth().currentUser.displayName;
+            this.userId = firebase.auth().currentUser.uid;
           }
           else {
             /*Kick the user back to the Login page if they do not exist. */
