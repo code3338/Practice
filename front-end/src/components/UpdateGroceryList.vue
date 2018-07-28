@@ -93,7 +93,6 @@ export default {
           console.log(response);
           location.reload();
         })
-
     },
     updateItemList() {
       for(let i = 0; i < this.groceryItemList.length; i++) {

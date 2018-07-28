@@ -8,7 +8,7 @@ app.use(serveStatic(__dirname + "/dist")); /*Anything with two underscores in it
 /*index.html, and build.js are static files.
 If we want index.html to be found, have to move index.html in the dist folder.*/
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 5000;
  /*Does not have to match the server in the app.js file.*/
 
 app.get('*', function (req, res) {

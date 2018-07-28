@@ -93,10 +93,9 @@ export default {
         if( confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
           axios.delete('https://afternoon-hollows-32021.herokuapp.com/deleteitem/' + item.productId)
             .then(function (response) {
-              console.log(response);
-              location.reload();
+              console.log(response)
+              
             })
-
         }
         else {
           console.log("not deleted");
