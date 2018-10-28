@@ -14,9 +14,19 @@ let app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+/*Link in web browser was https://heroku4.herokuapp.com/*/
+/*I changed the name of the url to https://grocerylistorganizer.herokuapp.com/*/
+/*Can change of the heroku link by going into heroku and
+changing the name, and then typing in the command line:
+git remote rm heroku
+heroku git:remote -a newnameofherokulink*/
 let connection = mysql.createConnection({
-
+  host     : 'den1.mysql1.gear.host',
+  user     : 'grocerydb1',
+  password : 'Mc19l~77!Jm8',
+  database : 'grocerydb1'
 });
+
 
 connection.connect();
 

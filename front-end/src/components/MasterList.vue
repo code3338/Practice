@@ -90,11 +90,11 @@ export default {
       }
     },
     deleteItem(item) {
-        if( confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
-          axios.delete('https://afternoon-hollows-32021.herokuapp.com/deleteitem/' + item.productId)
+        if(confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
+          axios.delete('https://grocerylistorganizer.herokuapp.com/deleteitem/' + item.productId)
             .then(function (response) {
               console.log(response)
-              
+
             })
         }
         else {
@@ -109,7 +109,7 @@ export default {
       }
       else {
         alert("Item has been added to Grocery List.");
-        axios.post('https://afternoon-hollows-32021.herokuapp.com/additemtogrocerylist', {
+        axios.post('https://grocerylistorganizer.herokuapp.com/additemtogrocerylist', {
           productId:item.productId,
           groceryId:value,
           qty:value2
@@ -125,7 +125,7 @@ export default {
   },
   /*Upon creation of MasterList.vue component,  mySQL database sent to server, and then server sends the data to the front-end (AKA response data). We then insert this data into the masterList array in the data instance.*/
   created() {
-    axios.get('https://afternoon-hollows-32021.herokuapp.com/masterlist/' + this.$route.params.id)
+    axios.get('https://grocerylistorganizer.herokuapp.com/masterlist/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.masterList=response.data
@@ -134,7 +134,7 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-    axios.get('https://afternoon-hollows-32021.herokuapp.com/getgrocerylistname/' + this.$route.params.id)
+    axios.get('https://grocerylistorganizer.herokuapp.com/getgrocerylistname/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.groceryList=response.data

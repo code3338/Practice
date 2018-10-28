@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     updateItem(item) {
-      axios.patch('https://afternoon-hollows-32021.herokuapp.com/updateitem', {
+      axios.patch('https://grocerylistorganizer.herokuapp.com/updateitem', {
         productId:item.productId,
         productName:item.productName,
         price:item.price,
@@ -56,7 +56,7 @@ export default {
     }
   },
   created() {
-    axios.get('https://afternoon-hollows-32021.herokuapp.com/updateitem/' + this.$route.params.id)
+    axios.get('https://grocerylistorganizer.herokuapp.com/updateitem/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.item=response.data[0]

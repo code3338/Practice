@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     addGroceryList(groceryList) {
-      axios.post('https://afternoon-hollows-32021.herokuapp.com/creategrocerylist', {
+      axios.post('https://grocerylistorganizer.herokuapp.com/creategrocerylist', {
         name:groceryList.name,
         description:groceryList.description,
         userId:this.userId

@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     addItem(item) {
-      axios.post('https://afternoon-hollows-32021.herokuapp.com/item', {
+      axios.post('https://grocerylistorganizer.herokuapp.com/item', {
         name:item.name,
         price:item.price,
         qty:item.qty,

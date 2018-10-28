@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     updateGroceryList(groceryList) {
-      axios.patch('https://afternoon-hollows-32021.herokuapp.com/updategrocerylist', {
+      axios.patch('https://grocerylistorganizer.herokuapp.com/updategrocerylist', {
         groceryId:groceryList.groceryId,
         name:groceryList.groceryName,
         description:groceryList.groceryDescription
@@ -88,7 +88,7 @@ export default {
         this.groceryList.groceryDescription=""
     },
     deleteItem(groceryItem) {
-      axios.delete('https://afternoon-hollows-32021.herokuapp.com/deleteitemfromgrocerylist/' + groceryItem.id)
+      axios.delete('https://grocerylistorganizer.herokuapp.com/deleteitemfromgrocerylist/' + groceryItem.id)
         .then(function (response) {
           console.log(response);
           location.reload();
@@ -97,7 +97,7 @@ export default {
     updateItemList() {
       for(let i = 0; i < this.groceryItemList.length; i++) {
         //console.log(this.groceryItemList[i]);
-        axios.patch('https://afternoon-hollows-32021.herokuapp.com/updategrocerylistitems', {
+        axios.patch('https://grocerylistorganizer.herokuapp.com/updategrocerylistitems', {
           id:this.groceryItemList[i].id,
           qty:this.groceryItemList[i].QTY
         })
@@ -119,7 +119,7 @@ export default {
     }
   },
   created() {
-    axios.get('https://afternoon-hollows-32021.herokuapp.com/updategrocerylist/' + this.$route.params.id)
+    axios.get('https://grocerylistorganizer.herokuapp.com/updategrocerylist/' + this.$route.params.id)
       .then((response) => {
         console.log(response);
         this.groceryList=response.data[0]
@@ -127,7 +127,7 @@ export default {
       .catch((error) => {
         console.log(error);
       })
-      axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
+      axios.get('https://grocerylistorganizer.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
         .then((response) => {
           console.log(response);
           this.groceryItemList=response.data

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     sendEmail() {
-      axios.post('https://afternoon-hollows-32021.herokuapp.com/viewgrocerylist', {
+      axios.post('https://grocerylistorganizer.herokuapp.com/viewgrocerylist', {
         email:this.email,
         text:this.textarea,
         groceryListName:this.groceryListName.groceryName,
@@ -87,7 +87,7 @@ export default {
     }
   },
   created() {
-      axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
+      axios.get('https://grocerylistorganizer.herokuapp.com/grocerylistfinal/' + this.$route.params.id)
         .then((response) => {
           console.log(response);
           this.groceryListFinal=response.data
@@ -95,7 +95,7 @@ export default {
         .catch((error) => {
           console.log(error);
         })
-        axios.get('https://afternoon-hollows-32021.herokuapp.com/grocerylist/' + this.$route.params.id)
+        axios.get('https://grocerylistorganizer.herokuapp.com/grocerylist/' + this.$route.params.id)
           .then((response) => {
             console.log(response);
             this.groceryList=response.data
@@ -103,7 +103,7 @@ export default {
           .catch((error) => {
             console.log(error);
           })
-          axios.get('https://afternoon-hollows-32021.herokuapp.com/listofgrocerylists2/' + this.$route.params.id)
+          axios.get('https://grocerylistorganizer.herokuapp.com/listofgrocerylists2/' + this.$route.params.id)
             .then((response) => {
               console.log(response);
               this.groceryListName=response.data[0]
