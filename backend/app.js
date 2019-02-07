@@ -21,10 +21,10 @@ changing the name, and then typing in the command line:
 git remote rm heroku
 heroku git:remote -a newnameofherokulink*/
 let connection = mysql.createConnection({
-  host     : 'den1.mysql4.gear.host',
-  user     : 'deploymen5',
-  password : 'Jw7h1~39v4q_',
-  database : 'deploymen5'
+  host     : '',
+  user     : '',
+  password : '',
+  database : '';
 });
 
 
