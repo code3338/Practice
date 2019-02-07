@@ -90,7 +90,7 @@ export default {
       }
     },
     deleteItem(item) {
-        if(confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
+        if( confirm("If you delete this item, item will be removed from all grocery lists item was added to. Do you still want to delete this item?")) {
           axios.delete('https://grocerylistorganizer.herokuapp.com/deleteitem/' + item.productId)
             .then(function (response) {
               console.log(response)
